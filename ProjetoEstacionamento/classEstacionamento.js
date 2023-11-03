@@ -47,4 +47,5 @@ class Estacionamento {
     }
 }
 
+//Exporta a classe
 module.exports = Estacionamento;
