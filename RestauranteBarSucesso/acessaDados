@@ -1,0 +1,24 @@
+// Defina o array de pratos do cardápio
+const cardapio = [
+  {
+    nome: "Pizza Margherita",
+    descricao: "Molho de tomate, queijo mussarela e manjericão fresco.",
+    preco: 30.00
+  },
+  {
+    nome: "Hamburguer Clássico",
+    descricao: "Hamburguer, queijo, alface, tomate e maionese.",
+    preco: 15.00
+  },
+  {
+    nome: "Salada Caesar",
+    descricao: "Alface romana, croutons, queijo parmesão e molho Caesar.",
+    preco: 12.50
+  }
+  // Adicione mais pratos conforme necessário
+];
+
+// Exemplo de como acessar os pratos do cardápio
+console.log("Nome do primeiro prato:", cardapio[0].nome);
+console.log("Descrição do segundo prato:", cardapio[1].descricao);
+console.log("Preço do terceiro prato:", cardapio[2].preco);
