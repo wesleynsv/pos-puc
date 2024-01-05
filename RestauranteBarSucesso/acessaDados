@@ -1,4 +1,4 @@
-// Defina o array de pratos do cardápio
+// Defina o array de pratos do cardápio teste
 const cardapio = [
   {
     nome: "Pizza Margherita",
