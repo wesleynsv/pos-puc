@@ -1,5 +1,5 @@
 exports.post = (req, res, next) => {
-    res.status(201).send('route POST!');
+    res.status(201).send('Acessando a rota POST!');
 };
 
 exports.put = (req, res, next) => {
@@ -14,7 +14,7 @@ exports.delete = (req, res, next) => {
 };
 
 exports.get = (req, res, next) => {
-    res.status(200).send('route GET!');
+    res.status(200).send('ESTA É UMA ROTA GET!');
 };
 
 exports.getById = (req, res, next) => {
