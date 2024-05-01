@@ -14,8 +14,6 @@ engine = sa.create_engine("sqlite:///BancoDeDadosRelacional//vendas.db")
 sessao = orm.sessionmaker(bind=engine)
 sessao = sessao()
 
-
-
 #tbVendedor
 for i in  range(len(tbVendedor)):
     dados_vendedor = vd.vendedor(
@@ -42,12 +40,14 @@ tbProduto = pd.DataFrame(produto)
 
 conn = engine.connect()
 
-metadata = sa.schema.MetaData(bind=engine)
+#metadata = sa.schema.MetaData(bind=engine)
+metadata = sa.MetaData()
+metadata.bind = engine
 
 DadosProduto = tbProduto.to_dict(orient="records")
 
-tabela_produto = sa.Table(vd.produto.__tablename__,metadata,autoload=True)
-
+#tabela_produto = sa.Table(vd.produto.__tablename__,metadata,autoload=True)
+tabela_produto = sa.Table(vd.produto.__tablename__,metadata,autoload_with=engine)
 
 try:
     conn.execute(tabela_produto.insert(),DadosProduto)
@@ -58,5 +58,6 @@ except ValueError:
 
 print ("Dados inseridos na tbProduto")
 
-sessao.close_all
+#sessao.close_all
+sessao.close()
 
