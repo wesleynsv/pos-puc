@@ -1,47 +1,58 @@
+#Primeira coisa a se fazer é importar o SQLAlchemy para utilizar os métodos no Python
 import sqlalchemy as sa 
-import sqlalchemy.orm as orm
 
+#Agora, vamos criar uma engrenagem com o Banco de dados.
+#Para nossa disciplina, utilizaremos o SQLite
 engine = sa.create_engine("sqlite:///BancoDeDadosRelacional//dp.db")
-base = orm.declarative_base()
 
-#Tabela DP
-class dp (base):
-    __tablename__ = "dp"
+#Uma vez com a engrenagem de banco conectada, precisamos de importar
+#um dos principais métodos do SQLAlchemy, que é a declarative_base()
 
-    codDP = sa.Column(sa.INTEGER,primary_key= True, index=True)
-    nome = sa.Column(sa.VARCHAR(100), nullable=False)
-    endereco = sa.Column(sa.VARCHAR(255), nullable=False)
+#Esse método é, literalmente, a BASE para a realização do Mapeamento
+#dos objetos no SQLite. É ele que vai te possibilitar a criação de uma classe
+#para, consequente, criação das tabelas e colunas.
+import sqlalchemy.orm as orm
+base = orm.declarative_base() #variável de ORM
 
-#Tabela responsavel
-class responsavel (base):
-    __tablename__ = "responsavel"
+#criando tbDP, via ORM
+class dp(base):
+    __tablename__ = 'tbDP'
 
-    codDP = sa.Column(sa.INTEGER,primary_key= True, index=True)
-    delegado = sa.Column(sa.VARCHAR(100), nullable=False)
+    codDP = sa.Column(sa.INTEGER, primary_key = True, index=True)
+    nmDP = sa.Column(sa.VARCHAR(100), nullable = False)
+    enderecoDP = sa.Column(sa.VARCHAR(255), nullable = False) 
 
-#Tabela municipio
-class municipio (base):
-    __tablename__ = "municipio"
+#criando tbResponsavelDP, via ORM
+class responsaveldp(base):
+    __tablename__ = 'tbResponsavelDP'
 
-    codIBGE = sa.Column(sa.INTEGER,primary_key= True, index=True)
-    municipio = sa.Column(sa.VARCHAR(100), nullable=False)
-    regiao = sa.Column(sa.VARCHAR(25), nullable=False)
+    codDP = sa.Column(sa.INTEGER, primary_key = True,index=True)
+    delegado = sa.Column(sa.VARCHAR(100), nullable = False)
 
-#Tabela ocorrencias
-class ocorrencias (base):
-    __tablename__ = "ocorrencias"
+#criando tbMunicipio, via ORM
+class municipio(base):
+    __tablename__ = 'tbMunicipio'
 
-    idRegistro = sa.Column(sa.INTEGER,primary_key= True, index=True)
-    codDP = sa.Column(sa.INTEGER,sa.ForeignKey("dp.codDP", ondelete="NO ACTION", onupdate="CASCADE"),index = True)
-    codIBGE = sa.Column(sa.INTEGER,sa.ForeignKey("municipio.codIBGE", ondelete="NO ACTION", onupdate="CASCADE"), index=True)
-    ano = sa.Column(sa.CHAR(4), nullable= False)
-    mes = sa.Column(sa.VARCHAR(2), nullable= False)
-    ocorrencia = sa.Column(sa.VARCHAR(100), nullable= False)
+    codIBGE = sa.Column(sa.INTEGER, primary_key = True,index=True)
+    municipio = sa.Column(sa.VARCHAR(100), nullable = False)
+    regiao = sa.Column(sa.VARCHAR(25), nullable = False)
+
+#criando tbOcorrencias, via ORM
+class ocorrencia(base):
+    __tablename__ = 'tbOcorrencias'
+
+    idRegistro = sa.Column(sa.INTEGER, primary_key = True, index=True)
+    codDP = sa.Column(sa.INTEGER, sa.ForeignKey('tbDP.codDP', ondelete='NO ACTION', onupdate='CASCADE'), index=True)
+    codIBGE = sa.Column(sa.INTEGER, sa.ForeignKey('tbMunicipio.codIBGE', ondelete='NO ACTION', onupdate='CASCADE'), index=True)
+    ano = sa.Column(sa.CHAR(4), nullable=False)
+    mes = sa.Column(sa.CHAR(2), nullable=False)
+    ocorrencia = sa.Column(sa.VARCHAR(100), nullable = False)
     qtde = sa.Column(sa.INTEGER, nullable=False)
 
+#Criar a tabelas
 try:
-    base.metadata.create_all(engine) #criar tabelas
-    print("Tabelas criadas")
-    
+    base.metadata.create_all(engine) #Criar a tabela
+    #Mensagem de conclusão
+    print("Tabelas Criadas!")
 except ValueError:
-    ValueError()
+    print("Tabelas NÃO foram criadas. Favor verificar!")

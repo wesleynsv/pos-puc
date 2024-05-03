@@ -3,7 +3,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm as orm
 import vendas as vd
 
-endereco = "C:\\Users\\wesle\\Downloads\\Dados_Exemplo\\"
+endereco = "C:\\Users\\wesle\\Documents\\VSCode\\vscode\\BancoDeDadosRelacional\\Dados_Exemplo\\"
 
 vendedor = pd.read_csv(endereco + "vendedor.csv", sep = ";")
 
